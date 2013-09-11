@@ -52,13 +52,20 @@ function f_aap_media_views_default_views() {
     'aap_video_gallery' => 'aap_video_gallery',
   );
 
-  /* Display: AAP Video Gallery */
-  $handler = $view->new_display('page', 'AAP Video Gallery', 'page');
+  /* Display: Videos */
+  $handler = $view->new_display('page', 'Videos', 'page');
   $handler->display->display_options['defaults']['title'] = FALSE;
-  $handler->display->display_options['title'] = 'AAP Video Gallery';
+  $handler->display->display_options['title'] = 'Videos';
   $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '12';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'grid';
+  $handler->display->display_options['style_options']['row_class'] = 'aap-video-gallery-row';
   $handler->display->display_options['style_options']['columns'] = '3';
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
@@ -66,17 +73,15 @@ function f_aap_media_views_default_views() {
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Content: Upload Video */
-  $handler->display->display_options['fields']['field_aap_video']['id'] = 'field_aap_video';
-  $handler->display->display_options['fields']['field_aap_video']['table'] = 'field_data_field_aap_video';
-  $handler->display->display_options['fields']['field_aap_video']['field'] = 'field_aap_video';
-  $handler->display->display_options['fields']['field_aap_video']['label'] = '';
-  $handler->display->display_options['fields']['field_aap_video']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_aap_video']['click_sort_column'] = 'video_url';
-  $handler->display->display_options['fields']['field_aap_video']['settings'] = array(
+  $handler->display->display_options['fields']['field_ct_video']['id'] = 'field_ct_video';
+  $handler->display->display_options['fields']['field_ct_video']['table'] = 'field_data_field_ct_video';
+  $handler->display->display_options['fields']['field_ct_video']['field'] = 'field_ct_video';
+  $handler->display->display_options['fields']['field_ct_video']['label'] = '';
+  $handler->display->display_options['fields']['field_ct_video']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_ct_video']['click_sort_column'] = 'video_url';
+  $handler->display->display_options['fields']['field_ct_video']['settings'] = array(
     'video_style' => 'normal',
   );
-  $handler->display->display_options['fields']['field_aap_video']['delta_offset'] = '0';
-  $handler->display->display_options['fields']['field_aap_video']['separator'] = '';
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
@@ -84,6 +89,8 @@ function f_aap_media_views_default_views() {
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
   $handler->display->display_options['fields']['title']['alter']['text'] = '<div class = "video-title">[title]</div>';
+  $handler->display->display_options['fields']['title']['alter']['max_length'] = '80';
+  $handler->display->display_options['fields']['title']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['title']['element_label_colon'] = FALSE;
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   /* Sort criterion: Content: Post date */
@@ -105,10 +112,10 @@ function f_aap_media_views_default_views() {
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
-    'aap_video_gallery' => 'aap_video_gallery',
+    'videos' => 'videos',
   );
   $handler->display->display_options['filters']['type']['group'] = 1;
-  $handler->display->display_options['path'] = 'aap-video-gallery';
+  $handler->display->display_options['path'] = 'videos';
   $export['aap_media'] = $view;
 
   return $export;

@@ -10,8 +10,8 @@
 function f_aap_media_field_default_fields() {
   $fields = array();
 
-  // Exported field: 'node-aap_video_gallery-body'.
-  $fields['node-aap_video_gallery-body'] = array(
+  // Exported field: 'node-videos-body'.
+  $fields['node-videos-body'] = array(
     'field_config' => array(
       'active' => '1',
       'cardinality' => '1',
@@ -42,7 +42,7 @@ function f_aap_media_field_default_fields() {
       'type' => 'text_with_summary',
     ),
     'field_instance' => array(
-      'bundle' => 'aap_video_gallery',
+      'bundle' => 'videos',
       'default_value' => array(
         0 => array(
           'summary' => array(
@@ -61,7 +61,7 @@ function f_aap_media_field_default_fields() {
           'module' => 'text',
           'settings' => array(),
           'type' => 'text_default',
-          'weight' => '0',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'hidden',
@@ -90,19 +90,19 @@ function f_aap_media_field_default_fields() {
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => '3',
+        'weight' => '41',
       ),
     ),
   );
 
-  // Exported field: 'node-aap_video_gallery-field_aap_video'.
-  $fields['node-aap_video_gallery-field_aap_video'] = array(
+  // Exported field: 'node-videos-field_ct_video'.
+  $fields['node-videos-field_ct_video'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '-1',
+      'cardinality' => '1',
       'deleted' => '0',
       'entity_types' => array(),
-      'field_name' => 'field_aap_video',
+      'field_name' => 'field_ct_video',
       'foreign keys' => array(),
       'indexes' => array(),
       'locked' => '0',
@@ -114,20 +114,20 @@ function f_aap_media_field_default_fields() {
       'type' => 'video_embed_field',
     ),
     'field_instance' => array(
-      'bundle' => 'aap_video_gallery',
+      'bundle' => 'videos',
       'default_value' => NULL,
       'deleted' => '0',
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'hidden',
+          'label' => 'above',
           'module' => 'video_embed_field',
           'settings' => array(
             'description' => 1,
-            'video_style' => 'teaser',
+            'video_style' => 'normal',
           ),
           'type' => 'video_embed_field',
-          'weight' => '1',
+          'weight' => 1,
         ),
         'teaser' => array(
           'label' => 'above',
@@ -137,7 +137,7 @@ function f_aap_media_field_default_fields() {
         ),
       ),
       'entity_type' => 'node',
-      'field_name' => 'field_aap_video',
+      'field_name' => 'field_ct_video',
       'label' => 'Upload Video',
       'required' => 0,
       'settings' => array(
@@ -149,7 +149,77 @@ function f_aap_media_field_default_fields() {
         'module' => 'video_embed_field',
         'settings' => array(),
         'type' => 'video_embed_field_video',
-        'weight' => '2',
+        'weight' => '42',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-videos-field_video_id'.
+  $fields['node-videos-field_video_id'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_video_id',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+        'profile2_private' => FALSE,
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'videos',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 2,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_video_id',
+      'label' => 'Video Id',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '43',
       ),
     ),
   );
@@ -158,6 +228,7 @@ function f_aap_media_field_default_fields() {
   // Included for use with string extractors like potx.
   t('Upload Video');
   t('Video Description');
+  t('Video Id');
 
   return $fields;
 }

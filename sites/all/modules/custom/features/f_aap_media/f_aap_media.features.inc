@@ -9,6 +9,10 @@
  */
 function f_aap_media_ctools_plugin_api() {
   list($module, $api) = func_get_args();
+  if ($module == "feeds" && $api == "feeds_importer_default") {
+    return array("version" => "1");
+  }
+  list($module, $api) = func_get_args();
   if ($module == "strongarm" && $api == "strongarm") {
     return array("version" => "1");
   }
@@ -30,8 +34,8 @@ function f_aap_media_views_api() {
  */
 function f_aap_media_node_info() {
   $items = array(
-    'aap_video_gallery' => array(
-      'name' => t('AAP Video Gallery'),
+    'videos' => array(
+      'name' => t('Videos'),
       'base' => 'node_content',
       'description' => '',
       'has_title' => '1',
