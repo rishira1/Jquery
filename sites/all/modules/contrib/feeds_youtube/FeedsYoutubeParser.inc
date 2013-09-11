@@ -278,6 +278,7 @@ class FeedsYoutubeParser extends FeedsParser {
       // Populate the FeedsFetcherResult object with the parsed results.
       $result->items[] = $item;
     }
+    return $result;
   }
 
   /**
