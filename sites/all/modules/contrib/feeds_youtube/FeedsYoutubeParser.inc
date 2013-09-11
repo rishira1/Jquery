@@ -22,10 +22,8 @@ class FeedsYoutubeParser extends FeedsParser {
    * @see FeedsParser::parse()
    */
   public function parse(FeedsSource $source, FeedsFetcherResult $fetcher_result) {
-
     $youtube_feed = $fetcher_result->getRaw();
     $result = new FeedsParserResult();
-
 
     /**
     * @see common_syndication_parser_parse()
@@ -45,16 +43,14 @@ class FeedsYoutubeParser extends FeedsParser {
     // Run parsing if the feed is Atom or RSS
     if ($this->isAtomFeed($sxml)) {
       $result = $this->parseAtom($sxml, $source, $fetcher_result);
-			
-    }
-    elseif ($this->isRssFeed($sxml)) {
+    } elseif ($this->isRssFeed($sxml)) {
       $result = $this->parseRss20($sxml, $source, $fetcher_result);
-			
-    }
-    else {
+
+    } else {
       throw new Exception(t('FeedsYoutubeParser: Unknown type of feed.'));
     }
-		return $result;
+
+    return $result;
   }
 
   /**
@@ -265,7 +261,7 @@ class FeedsYoutubeParser extends FeedsParser {
         'tags' => explode(',', $media->group->keywords),
         'embedded_player' => '',
         'duration' => $this->secsToTime($length),
-        'duration_raw' => $length,
+        'duration_raw' => (int) $length,
         'view_count' => (string) $viewCount,
         'fav_count' => (string) $viewCount,
         'rating' => (string) $rating,
