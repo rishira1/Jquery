@@ -80,7 +80,7 @@ function f_aap_media_views_default_views() {
   $handler->display->display_options['fields']['field_ct_video']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['field_ct_video']['click_sort_column'] = 'video_url';
   $handler->display->display_options['fields']['field_ct_video']['settings'] = array(
-    'video_style' => 'normal',
+    'video_style' => 'teaser',
   );
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';

@@ -57,6 +57,11 @@ function f_aap_media_feeds_importer_default() {
             'target' => 'body',
             'unique' => FALSE,
           ),
+          4 => array(
+            'source' => 'published_datetime',
+            'target' => 'created',
+            'unique' => FALSE,
+          ),
         ),
         'update_existing' => '0',
         'input_format' => 'plain_text',

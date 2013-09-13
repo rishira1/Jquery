@@ -34,4 +34,5 @@ features[variable][] = node_options_videos
 features[variable][] = node_preview_videos
 features[variable][] = node_submitted_aap_video_gallery
 features[variable][] = node_submitted_videos
+features[variable][] = pathauto_node_videos_pattern
 features[views_view][] = aap_media

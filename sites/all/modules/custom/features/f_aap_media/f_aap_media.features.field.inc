@@ -61,7 +61,7 @@ function f_aap_media_field_default_fields() {
           'module' => 'text',
           'settings' => array(),
           'type' => 'text_default',
-          'weight' => 0,
+          'weight' => '1',
         ),
         'teaser' => array(
           'label' => 'hidden',
@@ -120,14 +120,14 @@ function f_aap_media_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'video_embed_field',
           'settings' => array(
             'description' => 1,
             'video_style' => 'normal',
           ),
           'type' => 'video_embed_field',
-          'weight' => 1,
+          'weight' => '0',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -192,10 +192,9 @@ function f_aap_media_field_default_fields() {
       'display' => array(
         'default' => array(
           'label' => 'above',
-          'module' => 'text',
           'settings' => array(),
-          'type' => 'text_default',
-          'weight' => 2,
+          'type' => 'hidden',
+          'weight' => '2',
         ),
         'teaser' => array(
           'label' => 'above',
