@@ -1,0 +1,58 @@
+ //if (firstpage.HasValue)
+            //{
+                SelectList DClist = Users.DCList(HttpContext.User.Identity.Name);
+                SelectList Applist = Users.AppList(HttpContext.User.Identity.Name, DClist);
+                Session["DClist"] = DClist;
+                Session["Applist"] = Applist;
+            //}
+            //SelectList DClist2 = (SelectList)Session["DClist"];
+            //SelectList Applist2 = (SelectList)Session["Applist"];
+            ViewBag.DClist = DClist;
+            ViewBag.Applist = Applist;
+            int apid;
+            if (Convert.ToInt32(id)==0)
+            {
+               
+                 apid = Convert.ToInt32(Applist.First().Value);
+            }
+            else
+            {
+                apid = Convert.ToInt32(id); 
+            }
+         
+            //Roles.CreateRole("Manager");
+            var Ibservertypes = db.tbl_ServerTypes.Where(tbl_ServerType => tbl_ServerType.App_Id == apid);
+            //.Where(tbl_Server=>tbl_Server.tbl_Env.App_Id==1)
+
+
+            List<dynamic> newlist = new List<dynamic>();
+            var serverlist = db.tbl_Servers.GroupBy(server => server.Env_Id).Where(group => (group.FirstOrDefault().tbl_Env.App_Id == apid));
+            foreach (var group in serverlist)
+            {
+                dynamic ex = new ExpandoObject();
+                var ex1 = ex as IDictionary<String, Object>;
+                var envname = group.Select(server => server.tbl_Env.Env_Name).FirstOrDefault();
+                ex1["EnvName"] = envname;
+                foreach (var item in Ibservertypes)
+                {
+                    ex1[item.ServerType_Name] = null;
+                    foreach (var server in group)
+                    {
+
+                        if (server.ServerType_Id == item.ServerType_Id)
+                        {
+                            ex1[item.ServerType_Name] = server.Server_Name;
+                        }
+                    }
+
+                }
+                newlist.Add(ex);
+            }
+            if (Convert.ToInt32(id)==0)
+            {
+                return View(newlist);
+            }
+            else
+            {
+                return PartialView("_Index",newlist);
+            }
