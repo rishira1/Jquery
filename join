@@ -1,0 +1,126 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data.Entity;
+using System.Dynamic;
+
+namespace ESConsole
+{
+    public class Program
+    {
+
+        ESdbEntities db = new ESdbEntities();
+         static public void Main()
+        {
+
+
+           
+             Program p = new Program();
+            // p.create();
+             p.show();
+
+        }
+
+        public  void create()
+         {
+            //a = 6;
+            tbl_DG entity = new tbl_DG();
+            entity.DG_NAME = "dadg";
+            db.tbl_DGs.Add(entity);
+            db.SaveChanges();
+        }
+
+        public  void show()
+        {
+            
+            Console.WriteLine("Applications   DC  DG");
+            IQueryable<tbl_DG> abc = db.tbl_DGs.Include(t => t.tbl_DCs.Select(t1 => t1.tbl_APPs));
+            var query9 = db.tbl_DGs.Include(dg => dg.tbl_DCs).SelectMany(dg => dg.tbl_DCs.DefaultIfEmpty(), (dg, dc) => new { dg.DG_NAME, dc.DC_NAME });
+
+            IQueryable<tbl_APP> list = db.tbl_APPs.Include(t => t.tbl_DC.tbl_DG);
+            var query2 = db.tbl_DGs.Join(db.tbl_DCs, t => t.DG_id, t2 => t2.DG_ID, (t, t2) => new { t.DG_NAME, t2.DC_NAME });
+            var query5 = db.tbl_DGs.GroupJoin(db.tbl_DCs, dg => dg.DG_id, dc => dc.DG_ID, (dg, dcs) => new { dg.DG_NAME, dcs })
+                .SelectMany(group => group.dcs.DefaultIfEmpty(), (group, dc) => new { group.DG_NAME, dc.DC_NAME });
+            var query7 = from dg in db.tbl_DGs
+                         from dc in dg.tbl_DCs.DefaultIfEmpty()
+                         select new { dg.DG_NAME, dc.DC_NAME };
+            var query8 = from dg in db.tbl_DGs
+                         from dc in dg.tbl_DCs
+                         select new { dg.DG_NAME, dc.DC_NAME };
+            var query6 = from dg in db.tbl_DGs
+                         join dc in db.tbl_DCs
+                         on dg.DG_id equals dc.DG_ID
+                         into dcs
+                         from dc in dcs.DefaultIfEmpty()
+                         select new { dg.DG_NAME, dc.DC_NAME };
+            var query3 = from dg in db.tbl_DGs
+                         join dc in db.tbl_DCs
+                        on dg.DG_id equals dc.DG_ID
+                         select new
+                             {
+                                 dg.DG_NAME,
+                                 dc.DC_NAME
+                             };
+           //var lis2 = from temp in list
+           //       select temp.tbl_DCs  
+           //var query4=query3.ToList(); 
+           // Console.WriteLine("query type is:" + query5.GetType());
+
+            var details = from dg in db.tbl_DGs
+                          from dc in dg.tbl_DCs.DefaultIfEmpty()
+                          from app in dc.tbl_APPs.DefaultIfEmpty()
+                          select new { app, dc, dg };
+                         // select new { app.APPLICATION_NAME, dc.DC_NAME, dg.DG_NAME};
+            var ser = from env in db.tbl_Envs
+                      from server in env.tbl_Server
+                      select server.Server_Name;
+             foreach (var item in details)
+            { 
+              
+               //Console.WriteLine(item.APPLICATION_NAME+ "   " + item.DC_NAME + "      "+ item.DG_NAME);
+            }
+
+            //var serverlist = db.tbl_Servers.GroupBy(server => server.Env_Id);
+            //foreach (var group in serverlist) {
+            //    group.k
+            //    List<tbl_Server> envlist = group.ToList();
+            //    envlist.GroupBy(
+            //    foreach (var env in group) { 
+                         
+            //    }
+            //}
+           var Ibservertypes= db.tbl_ServerTypes.Where(tbl_ServerType => tbl_ServerType.App_Id == 1);
+
+
+           List<dynamic> newlist = new List<dynamic>();
+            var serverlist = db.tbl_Servers.GroupBy(server => server.Env_Id);
+            foreach (var group in serverlist)
+            {
+                dynamic ex = new ExpandoObject();
+                var ex1 = ex as IDictionary<String, Object>;
+
+                foreach (var item in Ibservertypes)
+                {
+                    ex1[item.ServerType_Name] = "rishi";
+                    foreach (var server in group)
+                    {
+                        
+                        if(server.ServerType_Id==item.ServerType_Id){
+                        ex1[item.ServerType_Name] = server.Server_Name;
+                        }
+                    }
+
+                }
+                newlist.Add(ex);
+            }
+       
+           
+          // String a = ex.WebServer;
+          // Console.WriteLine(a);
+            Console.ReadLine();
+        }
+    }
+
+}
